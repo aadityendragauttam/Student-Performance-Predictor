@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>System Specifications</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #05050b;
+            --panel-bg: rgba(13, 13, 25, 0.75);
+            --neon-cyan: #00f3ff;
+            --neon-magenta: #ff0055;
+            --text-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: 
+                radial-gradient(at 90% 10%, rgba(0, 243, 255, 0.05) 0px, transparent 50%),
+                radial-gradient(at 10% 90%, rgba(255, 0, 85, 0.05) 0px, transparent 50%);
+        }
+
+        /* High-Tech Cyber Navigation Bar */
+        nav {
+            background: rgba(8, 8, 16, 0.9);
+            border-bottom: 1px solid rgba(0, 243, 255, 0.2);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        nav .brand {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #fff;
+            text-decoration: none;
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+        }
+
+        nav .brand span {
+            color: var(--neon-cyan);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav ul a {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8a8aa3;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        nav ul a:hover, nav ul .active {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 8px rgba(0, 243, 255, 0.6);
+        }
+
+        /* Main Architecture Box */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .about-container {
+            max-width: 750px;
+            width: 100%;
+            background: var(--panel-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 0, 85, 0.2);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            position: relative;
+        }
+
+        /* Decorative tech interface brackets */
+        .about-container::before {
+            content: '[ ARCHITECTURE_MANIFEST ]';
+            position: absolute;
+            top: -12px;
+            left: 30px;
+            background: var(--bg-color);
+            padding: 0 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            color: var(--neon-magenta);
+            letter-spacing: 2px;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #fff;
+            margin-bottom: 25px;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+            padding-bottom: 15px;
+        }
+
+        p {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: #cbd5e1;
+            letter-spacing: 0.5px;
+            text-align: justify;
+        }
+
+        footer {
+            background: rgba(5, 5, 11, 0.9);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: #555577;
+            text-align: center;
+            padding: 15px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="/" class="brand"><span></span></a>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/project">Terminal</a></li>
+            <li><a href="/history">History</a></li>
+            <li><a href="/about" class="active">About</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="about-container">
+            <h1>System Manifesto</h1>
+            <p>
+                "Student Performance Prediction System" conjures imagery of cultivation and stewardship, suggesting a machine learning project that transforms complex academic data and student metrics into powerful vehicles for personal growth and educational equity. The framework evokes notions of cognitive security and proactive mentorship, hinting at the idea of predictive educational analytics as a protective cocoon for an individual's aspirations and long-term intellectual stability.
+
+This concept carries a symbolic weight, implying a focus on sustainability, resourcefulness, and data-driven trust within the academic sector. By breathing new life into historical educational records—such as study habits, socioeconomic backgrounds, and past assessment scores—this project embodies the principles of fair academic assessment and the reduction of dropout risks. Through this initiative, complex learning data is transformed into actionable insights, inviting the educational community to participate in a collective effort to build a more supportive, equitable, and inclusive society.
+            </p>
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Student Performance Prediction System. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+</body>
+</html>

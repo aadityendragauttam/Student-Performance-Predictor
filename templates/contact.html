@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Student Performance Prediction System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #05050b;
+            --panel-bg: rgba(13, 13, 25, 0.75);
+            --neon-cyan: #00f3ff;
+            --neon-magenta: #ff0055;
+            --text-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            background-image: 
+                radial-gradient(at 10% 10%, rgba(0, 243, 255, 0.05) 0px, transparent 50%),
+                radial-gradient(at 90% 90%, rgba(255, 0, 85, 0.05) 0px, transparent 50%);
+        }
+
+        /* Cyber Deck Navigation Panel */
+        nav {
+            background: rgba(8, 8, 16, 0.9);
+            border-bottom: 1px solid rgba(0, 243, 255, 0.2);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+
+        nav .brand {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #fff;
+            text-decoration: none;
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.5);
+        }
+
+        nav .brand span {
+            color: var(--neon-cyan);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 30px;
+        }
+
+        nav ul a {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #8a8aa3;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+        }
+
+        nav ul a:hover, nav ul .active {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 8px rgba(0, 243, 255, 0.6);
+        }
+
+        /* Contact Interface Wrapper */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .contact-container {
+            max-width: 550px;
+            width: 100%;
+            background: var(--panel-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+            position: relative;
+        }
+
+        .contact-container::before {
+            content: '[ SECURE_UPLINK_ESTABLISHED ]';
+            position: absolute;
+            top: -12px;
+            left: 30px;
+            background: var(--bg-color);
+            padding: 0 10px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            color: var(--neon-cyan);
+            letter-spacing: 2px;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.2rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .comms-status {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-magenta);
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Small pulsing recording dot indicator */
+        .comms-status::before {
+            content: '';
+            width: 8px;
+            height: 8px;
+            background-color: var(--neon-magenta);
+            border-radius: 50%;
+            display: inline-block;
+            box-shadow: 0 0 8px var(--neon-magenta);
+            animation: blink 1.5s infinite;
+        }
+
+        /* Stylized display for your actual contact number */
+        .secure-line-box {
+            background: rgba(0, 0, 0, 0.3);
+            border-left: 3px solid var(--neon-cyan);
+            padding: 20px;
+            border-radius: 4px;
+            margin-bottom: 30px;
+        }
+
+        .secure-line-box p {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            color: #8a8aa3;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .secure-line-box .phone-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
+        }
+
+        /* Visual system entry layout fields */
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            color: #aaaae0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        textarea {
+            width: 100%;
+            background: rgba(8, 8, 16, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 14px 16px;
+            color: #fff;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.1rem;
+            border-radius: 8px;
+            resize: none;
+            height: 100px;
+            transition: all 0.3s ease;
+        }
+
+        textarea:focus {
+            outline: none;
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.2);
+        }
+
+        button {
+            width: 100%;
+            background: transparent;
+            border: 1px solid var(--neon-cyan);
+            color: var(--neon-cyan);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            background: rgba(0, 243, 255, 0.08);
+            color: #fff;
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.3);
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 1; }
+        }
+
+        footer {
+            background: rgba(5, 5, 11, 0.9);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: #555577;
+            text-align: center;
+            padding: 15px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <a href="/" class="brand"><span></span></a>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/project">Terminal</a></li>
+            <li><a href="/history">History</a></li>
+            <li><a href="/contact" class="active">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <div class="contact-container">
+            <h1>Comms Gateway</h1>
+            <div class="comms-status">Direct Routing Encryption Active</div>
+
+            <div class="secure-line-box">
+                <p>Direct Command Line</p>
+                <div class="phone-number">+91 66780 327</div>
+            </div>
+<div class="secure-line-box">
+                <p>E-mail</p>
+                <div class="phone-number">sperformance@prediction.system</div>
+            </div>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Student Performance Prediction System. ALL RIGHTS RESERVED.</p>
+    </footer>
+
+</body>
+</html>

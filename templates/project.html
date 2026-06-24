@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Performance Prediction System</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0a0a12;
+            --panel-bg: rgba(18, 18, 32, 0.75);
+            --neon-cyan: #00f3ff;
+            --neon-magenta: #ff0055;
+            --text-color: #e2e8f0;
+            --border-glow: rgba(0, 243, 255, 0.2);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(at 10% 20%, rgba(0, 243, 255, 0.1) 0px, transparent 50%),
+                radial-gradient(at 90% 80%, rgba(255, 0, 85, 0.1) 0px, transparent 50%);
+        }
+
+        /* Matrix-like subtle scanlines */
+        body::before {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            z-index: 99999;
+            opacity: 0.4;
+            pointer-events: none;
+            background-size: 100% 4px, 6px 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.8rem;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            background: linear-gradient(45deg, var(--neon-cyan), var(--neon-magenta));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 10px rgba(0, 243, 255, 0.3));
+            animation: glitch 3s infinite;
+        }
+
+        main {
+            width: 100%;
+            max-width: 550px;
+            padding: 20px;
+            position: relative;
+        }
+
+        .description {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .description h2 {
+            font-size: 1.4rem;
+            color: var(--neon-cyan);
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+
+        .description p {
+            color: #8a8aa3;
+            font-size: 1.1rem;
+        }
+
+        .form-container {
+            background: var(--panel-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 243, 255, 0.2);
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 0 40px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(0, 243, 255, 0.05);
+            position: relative;
+        }
+
+        /* Decorative UI corners */
+        .form-container::before, .form-container::after {
+            content: '';
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            border: 2px solid var(--neon-magenta);
+        }
+        .form-container::before { top: -2px; left: -2px; border-right: 0; border-bottom: 0; }
+        .form-container::after { bottom: -2px; right: -2px; border-left: 0; border-top: 0; }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .form-container label {
+            display: block;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            color: #aaaae0;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 8px;
+            transition: 0.3s ease;
+        }
+
+        .form-container input, .form-container select {
+            width: 100%;
+            background: rgba(8, 8, 16, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 14px 16px;
+            color: #fff;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+            border-radius: 8px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* Styling dropdown arrow compatibility */
+        .form-container select {
+            appearance: none;
+            -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;utf8,<svg fill='%2300f3ff' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+            background-repeat: no-repeat;
+            background-position: right 16px center;
+        }
+
+        .form-container select option {
+            background: #0d0d1a;
+            color: #fff;
+        }
+
+        .form-container input:focus, .form-container select:focus {
+            outline: none;
+            border-color: var(--neon-cyan);
+            box-shadow: 0 0 15px rgba(0, 243, 255, 0.3), inset 0 0 8px rgba(0, 243, 255, 0.1);
+        }
+
+        /* Shift label color on focus */
+        .input-group:focus-within label {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 8px rgba(0, 243, 255, 0.5);
+        }
+
+        .btn-wrapper {
+            position: relative;
+            margin-top: 35px;
+        }
+
+        .form-container button {
+            width: 100%;
+            background: linear-gradient(90deg, #00f3ff, #0077ff);
+            color: #000;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            padding: 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(0, 243, 255, 0.4);
+        }
+
+        .form-container button:hover {
+            background: linear-gradient(90deg, #ff0055, #990033);
+            color: #fff;
+            box-shadow: 0 4px 25px rgba(255, 0, 85, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .form-container button:active {
+            transform: translateY(1px);
+        }
+
+        .Prediction {
+            margin-top: 30px;
+            width: 100%;
+            max-width: 550px;
+            padding: 0 20px;
+            text-align: center;
+        }
+
+        .result-box {
+            background: rgba(255, 0, 85, 0.05);
+            border: 1px dashed var(--neon-magenta);
+            padding: 20px;
+            border-radius: 12px;
+            display: inline-block;
+            width: 100%;
+            box-shadow: 0 0 20px rgba(255, 0, 85, 0.1);
+            animation: pulse 2s infinite alternate;
+        }
+
+        .Prediction h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            letter-spacing: 1px;
+            color: #fff;
+        }
+
+        .prediction-value {
+            color: var(--neon-cyan);
+            text-shadow: 0 0 10px rgba(0, 243, 255, 0.6);
+            font-weight: 700;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            from { box-shadow: 0 0 15px rgba(255, 0, 85, 0.1); }
+            to { box-shadow: 0 0 25px rgba(255, 0, 85, 0.3); border-color: var(--neon-cyan); }
+        }
+
+        @keyframes glitch {
+            0%, 100% { transform: none; }
+            92% { transform: skew(-1deg); }
+            94% { transform: skew(1deg); }
+            96% { transform: skew(-2deg); }
+            98% { transform: skew(2deg); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-color);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #22223b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--neon-cyan);
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>Student Performance Prediction System</h1>
+    </header>
+
+
+    <main>
+        <section class="description">
+            <h2>System Protocol: Performance Evaluation</h2>
+        </section>
+
+        <section class="form-container">
+            <form action="{{ url_for('predict') }}" method="post">
+                
+                <div class="input-group">
+                    <label for="age">Age :</label>
+                    <input type="number" id="age" name="age" min="1" max="70" required>
+                </div>
+
+                <div class="input-group">
+                    <label for="gender">Gender:</label>
+                    <select id="gender" name="gender" required>
+                        <option>Male</option>
+                        <option>Female</option>
+                        <option>Others</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="school_type">School Type:</label>
+                    <select id="school_type" name="school_type" required>
+                        <option>Public</option>
+                        <option>Private</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="parent_education">Parent Education:</label>
+                    <select id="parent_education" name="parent_education" required>
+                        <option>Post Graduate</option>
+                        <option>Graduate</option>
+                        <option>High School</option>
+                        <option>No Formal</option>
+                        <option>Diploma</option>
+                        <option>Phd</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label for="study_hours">Study Hours:</label>
+                    <input type="number" id="study_hours" name="study_hours" min="0.0" step="0.1" max="24.0" required oninput="this.value = this.value.replace(/^(\d+\.\d{1}).*$/, '$1');">
+                </div>
+
+                <div class="input-group">
+                    <label for="attendance_percentage">Attendance Percentage :</label>
+                    <input type="number" id="attendance_percentage" name="attendance_percentage" min="0.0" step="0.1" max="100" required oninput="this.value = this.value.replace(/^(\d+\.\d{1}).*$/, '$1');">
+                </div>
+
+                <div class="input-group">
+                    <label for="internet_access">Internet Access:</label>
+                    <select id="internet_access" name="internet_access" required>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                </div>
+                
+                <div class="input-group">
+                    <label for="travel_time">Travel Time:</label>
+                    <select id="travel_time" name="travel_time" required>
+                        <option>Less than 15 min</option>
+                        <option>Greater than 60 min</option>
+                        <option>15-30 min</option>
+                        <option>30-60 min</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="extra_activities">Extra Activities:</label>
+                    <select id="extra_activities" name="extra_activities" required>
+                        <option>Yes</option>
+                        <option>No</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label for="study_method">Study Method:</label>
+                    <select id="study_method" name="study_method" required>
+                        <option>Notes</option>
+                        <option>Textbook</option>
+                        <option>Group Study</option>
+                        <option>Coaching</option>
+                        <option>Mixed</option>
+                        <option>Online Videos</option>
+                    </select>
+                </div>
+                
+                <div class="btn-wrapper">
+                    <button type="submit">Analyze Risk Profile</button>
+                </div>
+            </form>
+        </section>
+    </main>
+
+    {% if prediction %}
+    <div class="Prediction">
+        <div class="result-box">
+            <h2>Evaluation Result: <span class="prediction-value">{{ prediction }}</span></h2>
+        </div>
+    </div>
+    {% endif %}
+
+</body>
+</html>
