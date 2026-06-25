@@ -1,6 +1,6 @@
 from flask import Flask, request , url_for , render_template
 import joblib
-model = joblib.load(r'C:\Users\user\OneDrive\Desktop\Data Science\Student-Performance-Prediction-System\model\student_model.lb')
+model = joblib.load(r'C:\Users\user\OneDrive\Desktop\Data Science\Student-Performance-Predictor\model\student_model.lb')
 app = Flask(__name__)
 @app.route('/')
 def index():
@@ -54,8 +54,8 @@ def predict():
 
         pred = model.predict([[age,gender,school_type	,parent_education,study_hours	,attendance_percentage,internet_access	,travel_time,extra_activities,study_method]])
         print('prediction :->>>',age,gender,school_type	,parent_education,study_hours	,attendance_percentage,internet_access	,travel_time,extra_activities,study_method)
-    
-    return render_template('project.html',prediction = pred)
+        final = round(pred[0])
+    return render_template('project.html',prediction = final)
 
 if __name__ == '__main__':
     app.run(debug=True)
